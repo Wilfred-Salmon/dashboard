@@ -25,13 +25,12 @@ class LineStatus(Enum):
     INFORMATION = "Information"
     SERVICE_CLOSED = "Service Closed"
 
-    @staticmethod
-    def parse_string(string: str) -> Self:
+    @classmethod
+    def parse_string(cls, string: str) -> Self:
         try:
-            return LineStatus(string)
+            return cls(string)
         except ValueError:
             raise ValueError(f"Unknown line status: {string}")
-
 
 
 class Line:
@@ -56,5 +55,6 @@ class Line:
         
         return statuses
 
-victoria_line = Line("piccadilly")
-print(victoria_line.get_status())
+
+
+victoria_line = Line("victoria")
