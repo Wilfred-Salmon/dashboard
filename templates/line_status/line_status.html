@@ -1,5 +1,3 @@
-{% import "line_status/_line_status.html" as components %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +8,14 @@
     <link href="{{ url_for('static', filename='styles/line_status.css') }}" rel="stylesheet" />
 </head>
 <body>
-    {{ components.line_status(line) }}
+    <div class="line-status-container">
+    <span class="indicator" style="background-color: {{line.get_indicator_colour()}};"></span>
+    <div class="line-status-content">
+        <h1>{{line.display_name}}</h1>
+        {% for status in line.get_status() %}
+            <p>{{status.value}}</p>
+        {% endfor %}
+    </div>
+</div>
 </body>
 </html>
