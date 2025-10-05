@@ -35,6 +35,7 @@ def line_statuses():
         "District": "district", 
         "Circle": "circle", 
         "Hammersmith & City": "hammersmith-city" ,
+        "Piccadilly": "piccadilly",
         "Metropolitan": "metropolitan"
     }
 
