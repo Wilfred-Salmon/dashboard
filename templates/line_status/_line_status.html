@@ -2,7 +2,7 @@
 <div class="line-status-container">
     <span class="indicator" style="background-color: {{line.get_indicator_colour()}};"></span>
     <div class="line-status-content">
-        <h1>{{line.line_id}}</h1>
+        <h1>{{line.display_name}}</h1>
         {% for status in line.get_status() %}
             <p>{{status.value}}</p>
         {% endfor %}

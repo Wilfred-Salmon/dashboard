@@ -35,6 +35,7 @@ class LineStatus(Enum):
 
 class Line:
     line_id: str
+    display_name: str
     _cached_status: List[LineStatus]
 
     TFL_BASE_URL = "https://api.tfl.gov.uk/Line"
@@ -43,8 +44,9 @@ class Line:
     GOOD_COLOUR = "green"
     BAD_COLOUR = "red"
 
-    def __init__(self, line_id: str) -> None:
+    def __init__(self, line_id: str, display_name: str) -> None:
         self.line_id = line_id
+        self.display_name = display_name
         self._cached_status = []
     
     def get_status(self) -> List[LineStatus]:

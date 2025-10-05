@@ -18,7 +18,9 @@ def different_page(name = None):
 
 @app.route('/line_status/<string:line_name>')
 def line_status(line_name: str):
-    line: Line = Line(line_name)
+    display_name = request.args.get('display_name', line_name)
+
+    line: Line = Line(line_name, display_name)
     try:
         line.cache_status()
     except Exception:
@@ -28,9 +30,15 @@ def line_status(line_name: str):
 
 @app.route('/line_statuses')
 def line_statuses():
-    line_names = ["victoria", "district", "circle", "hammersmith-city" ,"metropolitan"]
+    line_names = {
+        "Victoria": "victoria", 
+        "District": "district", 
+        "Circle": "circle", 
+        "Hammersmith & City": "hammersmith-city" ,
+        "Metropolitan": "metropolitan"
+    }
 
-    lines = [Line(name) for name in line_names]
+    lines = [Line(id, disp_name) for disp_name, id in line_names.items()]
 
     return(render_template('line_status/line_statuses.html', lines = lines))
 
