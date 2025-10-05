@@ -55,17 +55,17 @@ class Line:
         line_statuses = data[0]['lineStatuses']
         statuses = [LineStatus.parse_string(status['statusSeverityDescription']) for status in line_statuses]
 
-        self._set_colour_from_statuses(statuses)
+        self._set_indicator_colour_from_statuses(statuses)
         
         return statuses
     
-    def get_colour(self) -> str:
+    def get_indicator_colour(self) -> str:
         if not self._colour:
             self.get_status()
         
         return self._colour
     
-    def _set_colour_from_statuses(self, statuses: List[LineStatus]) -> None:
+    def _set_indicator_colour_from_statuses(self, statuses: List[LineStatus]) -> None:
         colour = "green"
 
         for status in statuses:
