@@ -4,19 +4,6 @@ from src.Line import Line
 
 app = Flask(__name__)
 
-@app.route('/', methods = ['GET', 'POST'])
-@app.route('/index', methods = ['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        return redirect(url_for('different_page', name = request.form.get("some stuff")))
-    
-    return render_template('index.html')
-
-@app.route('/test/')
-@app.route('/test/<string:name>')
-def different_page(name = None):
-    return render_template('test_name.html', name=name)
-
 @app.route('/line_status/<string:line_name>')
 def line_status_display(line_name: str):
     display_name = request.args.get('display_name', line_name)
