@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from src.Line import Line, LineStatus
-from typing import List
+from src.Line import Line
 
 app = Flask(__name__)
 
@@ -26,6 +25,14 @@ def line_status(line_name: str):
         return render_template('line_status/line_not_found.html', line_name = line_name), 404
     
     return render_template('line_status/line_status.html', line = line)
+
+@app.route('/line_statuses')
+def line_statuses():
+    line_names = ["victoria", "district", "circle", "hammersmith-city" ,"metropolitan"]
+
+    lines = [Line(name) for name in line_names]
+
+    return(render_template('line_status/line_statuses.html', lines = lines))
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)

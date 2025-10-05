@@ -45,6 +45,7 @@ class Line:
 
     def __init__(self, line_id: str) -> None:
         self.line_id = line_id
+        self._cached_status = []
     
     def get_status(self) -> List[LineStatus]:
         if not self._cached_status:
