@@ -35,9 +35,11 @@ class LineStatus(Enum):
 
 class Line:
     line_id: str
+    _colour: str
 
     TFL_BASE_URL = "https://api.tfl.gov.uk/Line"
     TFL_STATUS_URL = "Status"
+    GOOD_STATUSES = [LineStatus.GOOD_SERIVICE, LineStatus.NO_ISSUES]
 
     def __init__(self, line_id: str) -> None:
         self.line_id = line_id
@@ -52,8 +54,26 @@ class Line:
         data = response.json()
         line_statuses = data[0]['lineStatuses']
         statuses = [LineStatus.parse_string(status['statusSeverityDescription']) for status in line_statuses]
+
+        self._set_colour_from_statuses(statuses)
         
         return statuses
+    
+    def get_colour(self) -> str:
+        if not self._colour:
+            self.get_status()
+        
+        return self._colour
+    
+    def _set_colour_from_statuses(self, statuses: List[LineStatus]) -> None:
+        colour = "green"
+
+        for status in statuses:
+            if status not in self.GOOD_STATUSES:
+                colour = "red"
+                break
+
+        self._colour = colour
 
 
 
