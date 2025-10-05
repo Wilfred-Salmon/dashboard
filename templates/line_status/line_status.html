@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='styles/line_status.css') }}" rel="stylesheet" />
 </head>
 <body>
-    <h1>{{line_name}}</h1>
-    <ul>
-        {% for status in line_status %}
-            <li>{{status.value}}</li>
-        {% endfor %}
-    </ul>
+    <div class="line-status-container">
+        <span class="indicator"></span>
+        <div class="line-status-content">
+            <h1>{{line_name}}</h1>
+            {% for status in line_status %}
+                <p>{{status.value}}</p>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>
