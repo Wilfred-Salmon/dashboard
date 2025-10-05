@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from pandas import read_csv
+from typing import List, Dict
 from src.Line import Line
 
 app = Flask(__name__)
@@ -18,11 +19,15 @@ def line_status_display(line_name: str):
 
 @app.route('/lines')
 def get_lines():
-    return jsonify(read_csv('data/lines.csv', sep = ", ").to_dict(orient='records'))
+    return jsonify(get_lines_list())
 
 @app.route('/line_statuses')
 def line_statuses():
-    return(render_template('line_status/line_statuses.html'))
+    lines = get_lines_list()
+    return(render_template('line_status/line_statuses.html', lines = lines))
+
+def get_lines_list() -> List[Dict[str, str]]:
+    return read_csv('data/lines.csv', sep = ", ", engine='python').to_dict(orient='records')
 
 if __name__ == '__main__':
-    app.run(port=8000, debug=True)
+    app.run(port = 8000, debug = True, host = '0.0.0.0')
