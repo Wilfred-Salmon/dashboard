@@ -1,5 +1,3 @@
-{% import "line_status/_line_status.html" as components %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,12 +6,9 @@
     <title>Dashboard</title>
     <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='styles/line_status.css') }}" rel="stylesheet" />
+    <script src="{{ url_for('static', filename='js/line_status_loader.js') }}"></script>
 </head>
 <body>
-    <div class="line-statuses">
-        {% for line in lines %}
-            {{ components.line_status(line) }}
-        {% endfor %}
-    </div>
+    <div id="line-statuses"></div>
 </body>
 </html>

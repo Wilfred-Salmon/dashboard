@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from src.Line import Line
 
 app = Flask(__name__)
@@ -17,7 +17,7 @@ def different_page(name = None):
     return render_template('test_name.html', name=name)
 
 @app.route('/line_status/<string:line_name>')
-def line_status(line_name: str):
+def line_status_display(line_name: str):
     display_name = request.args.get('display_name', line_name)
 
     line: Line = Line(line_name, display_name)
@@ -28,20 +28,20 @@ def line_status(line_name: str):
     
     return render_template('line_status/line_status.html', line = line)
 
+@app.route('/lines')
+def get_lines():
+    return jsonify([
+        {"display_name":"Victoria" , "id": "victoria"},
+        {"display_name":"District" , "id": "district"},
+        {"display_name":"Circle" , "id": "circle"},
+        {"display_name":"Hammersmith & City" , "id": "hammersmith-city"},
+        {"display_name":"Piccadilly" , "id": "piccadilly"},
+        {"display_name":"Metropolitan" , "id": "metropolitan"}
+    ])
+
 @app.route('/line_statuses')
 def line_statuses():
-    line_names = {
-        "Victoria": "victoria", 
-        "District": "district", 
-        "Circle": "circle", 
-        "Hammersmith & City": "hammersmith-city" ,
-        "Piccadilly": "piccadilly",
-        "Metropolitan": "metropolitan"
-    }
-
-    lines = [Line(id, disp_name) for disp_name, id in line_names.items()]
-
-    return(render_template('line_status/line_statuses.html', lines = lines))
+    return(render_template('line_status/line_statuses.html'))
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)

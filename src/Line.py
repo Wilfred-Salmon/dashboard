@@ -2,7 +2,7 @@ import requests
 from enum import Enum
 from typing import List, Self
 
-class LineStatus(Enum):
+class LineStatus(str, Enum):
     SPECIAL_SERVICE = "Special Service"
     CLOSED = "Closed"
     SUSPENDED = "Suspended"
@@ -44,10 +44,10 @@ class Line:
     GOOD_COLOUR = "green"
     BAD_COLOUR = "red"
 
-    def __init__(self, line_id: str, display_name: str) -> None:
+    def __init__(self, line_id: str, display_name: str, cached_status = []) -> None:
         self.line_id = line_id
         self.display_name = display_name
-        self._cached_status = []
+        self._cached_status = cached_status
     
     def get_status(self) -> List[LineStatus]:
         if not self._cached_status:
