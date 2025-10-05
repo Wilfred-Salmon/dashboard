@@ -35,16 +35,37 @@ class LineStatus(Enum):
 
 class Line:
     line_id: str
-    _colour: str
+    _cached_status: List[LineStatus]
 
     TFL_BASE_URL = "https://api.tfl.gov.uk/Line"
     TFL_STATUS_URL = "Status"
     GOOD_STATUSES = [LineStatus.GOOD_SERIVICE, LineStatus.NO_ISSUES]
+    GOOD_COLOUR = "green"
+    BAD_COLOUR = "red"
 
     def __init__(self, line_id: str) -> None:
         self.line_id = line_id
     
     def get_status(self) -> List[LineStatus]:
+        if not self._cached_status:
+            self.cache_status()
+        
+        return self._cached_status
+    
+    def get_indicator_colour(self) -> str:
+        if not self._cached_status:
+            self.cache_status()
+        
+        colour = self.GOOD_COLOUR
+
+        for status in self._cached_status:
+            if status not in self.GOOD_STATUSES:
+                colour = self.BAD_COLOUR
+                break
+
+        return colour
+    
+    def cache_status(self) -> None:
         url = f'{self.TFL_BASE_URL}/{self.line_id}/{self.TFL_STATUS_URL}'
         response = requests.get(url)
 
@@ -55,26 +76,4 @@ class Line:
         line_statuses = data[0]['lineStatuses']
         statuses = [LineStatus.parse_string(status['statusSeverityDescription']) for status in line_statuses]
 
-        self._set_indicator_colour_from_statuses(statuses)
-        
-        return statuses
-    
-    def get_indicator_colour(self) -> str:
-        if not self._colour:
-            self.get_status()
-        
-        return self._colour
-    
-    def _set_indicator_colour_from_statuses(self, statuses: List[LineStatus]) -> None:
-        colour = "green"
-
-        for status in statuses:
-            if status not in self.GOOD_STATUSES:
-                colour = "red"
-                break
-
-        self._colour = colour
-
-
-
-victoria_line = Line("victoria")
+        self._cached_status = statuses

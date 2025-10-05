@@ -17,7 +17,7 @@
         <span class="indicator"></span>
         <div class="line-status-content">
             <h1>{{line.line_id}}</h1>
-            {% for status in line_status %}
+            {% for status in line.get_status() %}
                 <p>{{status.value}}</p>
             {% endfor %}
         </div>

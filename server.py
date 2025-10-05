@@ -21,11 +21,11 @@ def different_page(name = None):
 def line_status(line_name: str):
     line: Line = Line(line_name)
     try:
-        statuses: List[LineStatus] = line.get_status()
+        line.cache_status()
     except Exception:
         return render_template('line_status/line_not_found.html', line_name = line_name), 404
     
-    return render_template('line_status/line_status.html', line = line, line_status = statuses)
+    return render_template('line_status/line_status.html', line = line)
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
