@@ -21,9 +21,10 @@ def line_status(line_name: str):
     line = Line(line_name)
     try:
         statuses = line.get_status()
-    except Exception as e:
-        abort(404)
-    return render_template('line_status.html', line_name = line_name, line_status = statuses)
+    except Exception:
+        return render_template('line_status/line_not_found.html', line_name = line_name), 404
+    
+    return render_template('line_status/line_status.html', line_name = line_name, line_status = statuses)
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
