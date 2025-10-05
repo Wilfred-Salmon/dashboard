@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+from pandas import read_csv
 from src.Line import Line
 
 app = Flask(__name__)
@@ -30,14 +31,7 @@ def line_status_display(line_name: str):
 
 @app.route('/lines')
 def get_lines():
-    return jsonify([
-        {"display_name":"Victoria" , "id": "victoria"},
-        {"display_name":"District" , "id": "district"},
-        {"display_name":"Circle" , "id": "circle"},
-        {"display_name":"Hammersmith & City" , "id": "hammersmith-city"},
-        {"display_name":"Piccadilly" , "id": "piccadilly"},
-        {"display_name":"Metropolitan" , "id": "metropolitan"}
-    ])
+    return jsonify(read_csv('data/lines.csv', sep = ", ").to_dict(orient='records'))
 
 @app.route('/line_statuses')
 def line_statuses():
