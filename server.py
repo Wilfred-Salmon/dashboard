@@ -1,30 +1,35 @@
-from flask import Flask, render_template, request, redirect, url_for, abort
-from Line import Line
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+from csv import DictReader
+from typing import List, Dict
+from src.Line import Line
 
 app = Flask(__name__)
 
-@app.route('/', methods = ['GET', 'POST'])
-@app.route('/index', methods = ['GET', 'POST'])
-def index():
-    if request.method == 'POST':
-        return redirect(url_for('different_page', name = request.form.get("some stuff")))
-    
-    return render_template('index.html')
-
-@app.route('/test/')
-@app.route('/test/<string:name>')
-def different_page(name = None):
-    return render_template('test_name.html', name=name)
-
 @app.route('/line_status/<string:line_name>')
-def line_status(line_name: str):
-    line = Line(line_name)
+def line_status_display(line_name: str):
+    display_name = request.args.get('display_name', line_name)
+
+    line: Line = Line(line_name, display_name)
     try:
-        statuses = line.get_status()
+        line.cache_status()
     except Exception:
         return render_template('line_status/line_not_found.html', line_name = line_name), 404
     
-    return render_template('line_status/line_status.html', line_name = line_name, line_status = statuses)
+    return render_template('line_status/line_status.html', line = line)
+
+@app.route('/lines')
+def get_lines():
+    return jsonify(get_lines_list())
+
+@app.route('/line_statuses')
+def line_statuses():
+    lines = get_lines_list()
+    return(render_template('line_status/line_statuses.html', lines = lines))
+
+def get_lines_list() -> List[Dict[str, str]]:
+    with open('data/lines.csv', 'r') as csvfile:
+        reader = DictReader(csvfile, delimiter=',')
+        return list(reader)
 
 if __name__ == '__main__':
-    app.run(port=8000, debug=True)
+    app.run(port = 8000, debug = True, host = '0.0.0.0')

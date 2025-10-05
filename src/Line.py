@@ -2,7 +2,7 @@ import requests
 from enum import Enum
 from typing import List, Self
 
-class LineStatus(Enum):
+class LineStatus(str, Enum):
     SPECIAL_SERVICE = "Special Service"
     CLOSED = "Closed"
     SUSPENDED = "Suspended"
@@ -35,14 +35,40 @@ class LineStatus(Enum):
 
 class Line:
     line_id: str
+    display_name: str
+    _cached_status: List[LineStatus]
 
     TFL_BASE_URL = "https://api.tfl.gov.uk/Line"
     TFL_STATUS_URL = "Status"
+    GOOD_STATUSES = [LineStatus.GOOD_SERIVICE, LineStatus.NO_ISSUES]
+    GOOD_COLOUR = "green"
+    BAD_COLOUR = "red"
 
-    def __init__(self, line_id: str) -> None:
+    def __init__(self, line_id: str, display_name: str, cached_status = []) -> None:
         self.line_id = line_id
+        self.display_name = display_name
+        self._cached_status = cached_status
     
     def get_status(self) -> List[LineStatus]:
+        if not self._cached_status:
+            self.cache_status()
+        
+        return self._cached_status
+    
+    def get_indicator_colour(self) -> str:
+        if not self._cached_status:
+            self.cache_status()
+        
+        colour = self.GOOD_COLOUR
+
+        for status in self._cached_status:
+            if status not in self.GOOD_STATUSES:
+                colour = self.BAD_COLOUR
+                break
+
+        return colour
+    
+    def cache_status(self) -> None:
         url = f'{self.TFL_BASE_URL}/{self.line_id}/{self.TFL_STATUS_URL}'
         response = requests.get(url)
 
@@ -52,9 +78,5 @@ class Line:
         data = response.json()
         line_statuses = data[0]['lineStatuses']
         statuses = [LineStatus.parse_string(status['statusSeverityDescription']) for status in line_statuses]
-        
-        return statuses
 
-
-
-victoria_line = Line("victoria")
+        self._cached_status = statuses

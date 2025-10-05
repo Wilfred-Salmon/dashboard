@@ -1,0 +1,20 @@
+.line-status-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 5px;
+}
+
+.indicator {
+    flex: 50%;
+    max-width: 50px;
+    max-height: 50px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+.line-status-content {
+    flex: 50%;
+    margin: 10px;
+}
