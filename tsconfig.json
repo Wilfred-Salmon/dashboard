@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ES2024",
+        "module": "ESNext",
+        "strict": true,
+        "outDir": "./static/js",
+        "rootDir": "./ts",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": ["ts/**/*.ts"],
+}
