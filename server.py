@@ -32,4 +32,4 @@ def get_lines_list() -> List[Dict[str, str]]:
         return list(reader)
 
 if __name__ == '__main__':
-    app.run(port = 8000, debug = True, host = '0.0.0.0')
+    app.run(port = 8000, debug = True)
