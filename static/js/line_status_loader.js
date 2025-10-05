@@ -9,7 +9,7 @@ async function load_statuses() {
     load_lines().then(lines => {
         const placeholders = lines.map(() => {
             const placeholder = document.createElement('div');
-            placeholder.classList.add('line-status-placeholder');
+            placeholder.classList.add('line-status-loader');
             status_container.appendChild(placeholder);
             return placeholder;
         })
