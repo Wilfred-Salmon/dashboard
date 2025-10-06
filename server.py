@@ -3,6 +3,15 @@ from src.Line import Line, get_lines_list
 
 app = Flask(__name__)
 
+@app.route('/')
+@app.route('/index')
+def dashboard():
+    return render_template('index.html')
+
+@app.route('/placeholder')
+def placeholder():
+    return render_template('placeholder.html')
+
 @app.route('/line_status/<string:line_name>')
 def line_status_display(line_name: str):
     display_name = request.args.get('display_name', line_name)
