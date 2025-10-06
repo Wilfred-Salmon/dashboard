@@ -1,6 +1,7 @@
 import requests
 from enum import Enum
-from typing import List, Self
+from typing import List, Dict, Self
+from csv import DictReader
 
 class LineStatus(str, Enum):
     SPECIAL_SERVICE = "Special Service"
@@ -80,3 +81,8 @@ class Line:
         statuses = [LineStatus.parse_string(status['statusSeverityDescription']) for status in line_statuses]
 
         self._cached_status = statuses
+
+def get_lines_list() -> List[Dict[str, str]]:
+    with open('./data/lines.csv', 'r') as csvfile:
+        reader = DictReader(csvfile, delimiter=',')
+        return list(reader)
