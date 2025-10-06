@@ -7,3 +7,6 @@ node_modules/
 
 # Compiled JavaScript files
 static/js/**/*.js
+
+# Secrets
+.env
