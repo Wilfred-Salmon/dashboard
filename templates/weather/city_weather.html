@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link href="{{ url_for('static', filename='styles/weather/weather.css') }}" rel="stylesheet" />
+</head>
+<body>
+    <h1>{{weather.display_name}}</h1>
+    <div class="weather-forecast-container">
+        {% for forecast in weather.get_weather() %}
+        <div class="weather-forecast">
+            <p>{{ forecast.time.strftime('%Y-%m-%d %H:%M') }}<p>
+            <img src="http://openweathermap.org/img/wn/{{ forecast.icon.value }}@2x.png" alt="{{ forecast.description }}">
+            <p>Temperature: {{ forecast.temperature }}°C</p>
+            <p>Feels Like: {{ forecast.feels_like }}°C</p>
+        </div>
+        {% endfor %}
+</body>
+</html>

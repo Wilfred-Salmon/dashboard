@@ -1,6 +1,6 @@
 import requests
 from enum import Enum
-from typing import List, Dict, Self
+from typing import List, Dict, Self, cast
 from csv import DictReader
 
 class LineStatus(str, Enum):
@@ -25,14 +25,14 @@ class LineStatus(str, Enum):
     NO_ISSUES = "No Issues"
     INFORMATION = "Information"
     SERVICE_CLOSED = "Service Closed"
+    UNKNOWN = "Unknown"
 
     @classmethod
     def parse_string(cls, string: str) -> Self:
         try:
             return cls(string)
         except ValueError:
-            raise ValueError(f"Unknown line status: {string}")
-
+            return cast(Self, cls.UNKNOWN)
 
 class Line:
     line_id: str
