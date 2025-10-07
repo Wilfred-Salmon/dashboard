@@ -14,7 +14,7 @@
         <div class="weather-forecast">
             <p>{{ forecast.time.strftime('%Y-%m-%d %H:%M') }}<p>
             <img src="http://openweathermap.org/img/wn/{{ forecast.icon.value }}@2x.png" alt="{{ forecast.description }}">
-            <p>Temperature: {{ forecast.temperature }}°C</p>
+            <p>{{ forecast.temperature }}°C</p>
             <p>Feels Like: {{ forecast.feels_like }}°C</p>
         </div>
         {% endfor %}
