@@ -13,8 +13,9 @@
         {% for forecast in weather.get_weather() %}
         <div class="weather-forecast">
             <p>{{ forecast.time.strftime('%Y-%m-%d %H:%M') }}</p>
-            <img src="http://openweathermap.org/img/wn/{{ forecast.icon.value }}@2x.png" alt="{{ forecast.description }}" style="height:100px;" />
+            <img src="http://openweathermap.org/img/wn/{{ forecast.icon.value }}@2x.png" style="height:100px;" />
             <p>{{ forecast.temperature }}°C</p>
+            <p>{{ forecast.description.capitalize() }}</p>
             <p>FL: {{ forecast.feels_like }}°C</p>
         </div>
         {% endfor %}
