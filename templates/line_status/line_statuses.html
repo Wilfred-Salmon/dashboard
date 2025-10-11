@@ -13,7 +13,10 @@
         {% for line in lines %}
         <div id='{{line.id}}' class="line-status-loader-container">
             <div class="line-status-loader"></div>
-            <h1>{{line.display_name}}</h1>
+            <div class="line-status-content">
+                <h1>{{line.display_name}}</h1>
+                <p>Loading status...</p>
+            </div>
         </div>
         {% endfor %}
     </div>
