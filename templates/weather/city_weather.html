@@ -10,12 +10,18 @@
 <body>
     <h1>{{weather.display_name}}</h1>
     <div class="weather-forecast-container">
+        <div class="weather-forecast">
+            <p>Time</p>
+            <span style="display: inline-block; height:100px"></span>
+            <p>Temperature</p>
+            <p>Feels Like</p>
+        </div>
         {% for forecast in weather.get_weather() %}
         <div class="weather-forecast">
-            <p>{{ forecast.time.strftime('%Y-%m-%d %H:%M') }}<p>
-            <img src="http://openweathermap.org/img/wn/{{ forecast.icon.value }}@2x.png" alt="{{ forecast.description }}">
+            <p>{{ forecast.time.strftime('%Y-%m-%d %H:%M') }}</p>
+            <img src="http://openweathermap.org/img/wn/{{ forecast.icon.value }}@2x.png" alt="{{ forecast.description }}" style="height:100px;" />
             <p>{{ forecast.temperature }}°C</p>
-            <p>Feels Like: {{ forecast.feels_like }}°C</p>
+            <p>{{ forecast.feels_like }}°C</p>
         </div>
         {% endfor %}
 </body>
