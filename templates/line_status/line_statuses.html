@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %}
+{% block head %}
     <title>Dashboard</title>
-    <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='styles/line_status/line_status.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='styles/line_status/line_statuses.css') }}" rel="stylesheet" />
     <script src="{{ url_for('static', filename='js/line_status_loader.js') }}"></script>
     <script>
         window.lines = {{ lines|tojson }};
     </script>
-</head>
-<body>
+{% endblock %}
+{% block body %}
     <div id="line-statuses">
         {% for line in lines %}
         <div id='{{line.id}}' class="line-status-loader-container">
@@ -21,5 +17,4 @@
         </div>
         {% endfor %}
     </div>
-</body>
-</html>
+{% endblock %}
