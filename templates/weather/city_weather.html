@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %}
+{% block head %}
     <title>Weather</title>
-    <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='styles/weather/weather.css') }}" rel="stylesheet" />
-</head>
-<body>
+{% endblock %}
+{% block body %}
     <h1>{{weather.display_name}}</h1>
     <div class="weather-forecast-container">
         {% for forecast in weather.get_weather() %}
@@ -19,5 +15,5 @@
             <p>FL: {{ forecast.feels_like }}°C</p>
         </div>
         {% endfor %}
-</body>
-</html>
+    </div>
+{% endblock %}

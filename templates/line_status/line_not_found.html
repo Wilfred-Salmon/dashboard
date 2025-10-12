@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "base.html" %}
+{% block head %}
     <title>Dashboard</title>
-    <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet" />
-</head>
-<body>
+{% endblock %}
+{% block body %}
     <h1>404</h1>
     <p>The line {{line_name}} could not be found</p>
-</body>
-</html>
+{% endblock %}
