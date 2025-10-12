@@ -66,14 +66,18 @@ class Weather_Forecast():
 class City_Weather(ResourceCacher[List[Weather_Forecast]]):
     city: str
 
+    WEATHER_BASE_URL = "http://api.openweathermap.org/data/2.5/forecast"
+
     def __init__(self, city: str, display_name: str) -> None:
         self.city = city
         self.display_name = display_name
         super().__init__()
     
     def get_resource_to_cache(self, cnt = 8) -> List[Weather_Forecast]:
-        url = f'http://api.openweathermap.org/data/2.5/forecast?q={self.city}&appid={API_KEY}&units=metric&cnt={cnt}'
-        response = requests.get(url)
+        response = requests.get(
+            self.WEATHER_BASE_URL,
+            params = {"q" : self.city, "appid": API_KEY, "units": "metric", "cnt": cnt}
+        )
 
         if response.status_code != 200:
             raise Exception(f"Failed to fetch weather data for {self.city}. Error code: {response.status_code}")
