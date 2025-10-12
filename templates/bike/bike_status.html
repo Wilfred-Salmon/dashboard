@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block head %}
+    <title>Bike Point Status</title>
+{% endblock %}
+{% block body %}
+    <div class="bike-status-container">
+        <h1>{{cycle_point.display_name}}</h1>
+        <p>Num ebikes: {{ cycle_point.get_cycle_point_status().num_ebikes }}</p>
+        <p>Num Standard bikes: {{ cycle_point.get_cycle_point_status().num_standard_bikes }}</p>
+        <p>Num slots: {{ cycle_point.get_cycle_point_status().total_slots }}</p>
+    </div>
+{% endblock %}
