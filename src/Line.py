@@ -1,5 +1,6 @@
 import requests
 from enum import Enum
+from src.ResourceCacher import ResourceCacher
 from typing import List, Dict, Self, cast
 from csv import DictReader
 
@@ -34,10 +35,9 @@ class LineStatus(str, Enum):
         except ValueError:
             return cast(Self, cls.UNKNOWN)
 
-class Line:
+class Line(ResourceCacher[List[LineStatus]]):
     line_id: str
     display_name: str
-    _cached_status: List[LineStatus]
 
     TFL_BASE_URL = "https://api.tfl.gov.uk/Line"
     TFL_STATUS_URL = "Status"
@@ -45,31 +45,25 @@ class Line:
     GOOD_COLOUR = "green"
     BAD_COLOUR = "red"
 
-    def __init__(self, line_id: str, display_name: str, cached_status = []) -> None:
+    def __init__(self, line_id: str, display_name: str) -> None:
         self.line_id = line_id
         self.display_name = display_name
-        self._cached_status = cached_status
+        super().__init__()
     
     def get_status(self) -> List[LineStatus]:
-        if not self._cached_status:
-            self.cache_status()
-        
-        return self._cached_status
+        return self.get_cache()
     
-    def get_indicator_colour(self) -> str:
-        if not self._cached_status:
-            self.cache_status()
-        
+    def get_indicator_colour(self) -> str:        
         colour = self.GOOD_COLOUR
 
-        for status in self._cached_status:
+        for status in self.get_cache():
             if status not in self.GOOD_STATUSES:
                 colour = self.BAD_COLOUR
                 break
 
         return colour
     
-    def cache_status(self) -> None:
+    def get_resource_to_cache(self) -> List[LineStatus]:
         url = f'{self.TFL_BASE_URL}/{self.line_id}/{self.TFL_STATUS_URL}'
         response = requests.get(url)
 
@@ -80,7 +74,7 @@ class Line:
         line_statuses = data[0]['lineStatuses']
         statuses = [LineStatus.parse_string(status['statusSeverityDescription']) for status in line_statuses]
 
-        self._cached_status = statuses
+        return statuses
 
 def get_lines_list() -> List[Dict[str, str]]:
     with open('./data/lines.csv', 'r') as csvfile:

@@ -4,6 +4,7 @@ import requests
 from datetime import datetime
 from typing import List, Self, Dict, cast
 from enum import Enum
+from src.ResourceCacher import ResourceCacher
 
 dotenv.load_dotenv()
 API_KEY = os.getenv("WEATHER_API_KEY")
@@ -62,16 +63,15 @@ class Weather_Forecast():
             "icon": self.icon.value
         }
 
-class City_Weather():
+class City_Weather(ResourceCacher[List[Weather_Forecast]]):
     city: str
-    _cached_weather: List[Weather_Forecast]
 
     def __init__(self, city: str, display_name: str) -> None:
         self.city = city
         self.display_name = display_name
-        self._cached_weather = []
-
-    def cache_weather(self, cnt = 8) -> None:
+        super().__init__()
+    
+    def get_resource_to_cache(self, cnt = 8) -> List[Weather_Forecast]:
         url = f'http://api.openweathermap.org/data/2.5/forecast?q={self.city}&appid={API_KEY}&units=metric&cnt={cnt}'
         response = requests.get(url)
 
@@ -80,15 +80,14 @@ class City_Weather():
         
         try:
             weather_list = response.json()["list"]
-            self._cached_weather = [Weather_Forecast(entry) for entry in weather_list]
+            print("returning weather")
+            return [Weather_Forecast(entry) for entry in weather_list]
         except Exception as e:
             raise ValueError(f"Could not parse OpenWeather API response for {self.city}") from e
-
-    def get_weather(self) -> List[Weather_Forecast]:
-        if not self._cached_weather:
-            self.cache_weather()
         
-        return self._cached_weather
+    def get_weather(self) -> List[Weather_Forecast]:
+        print("asked for weather")
+        return self.get_cache()
     
     def get_weather_json(self) -> List[Dict]:
         weather = self.get_weather()

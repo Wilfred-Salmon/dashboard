@@ -20,7 +20,7 @@ def line_status_display(line_name: str) -> Tuple[str, int]:
 
     line: Line = Line(line_name, display_name)
     try:
-        line.cache_status()
+        line.cache_resource()
     except Exception:
         return render_template('line_status/line_not_found.html', line_name = line_name), 404
     
