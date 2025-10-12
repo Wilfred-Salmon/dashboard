@@ -5,7 +5,7 @@ T = TypeVar('T')
 
 class ResourceCacher(ABC, Generic[T]):
     _cache: T | None
-    
+
     def __init__(self) -> None:
         self._cache = None
 
@@ -17,7 +17,7 @@ class ResourceCacher(ABC, Generic[T]):
         self._cache = self.get_resource_to_cache()
 
     def ensure_cache(self) -> None:
-        if not self._cache:
+        if self._cache is None:
             self.cache_resource()
 
     def get_cache(self) -> T:
