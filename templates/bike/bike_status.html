@@ -8,7 +8,7 @@
         <h1>{{cycle_point.display_name}}</h1>
         <div class = "bike-status-bar">
             {% for _ in range(cycle_point.get_cycle_point_status().num_ebikes) %}
-                <span class="bike-status-icon" style="background-color: rgb(255 174 0);"></span>
+                <span class="bike-status-icon" style="background-color: #03A9F4;"></span>
             {% endfor %}
             {% for _ in range(cycle_point.get_cycle_point_status().num_standard_bikes) %}
                 <span class="bike-status-icon" style="background-color: green;"></span>
