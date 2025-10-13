@@ -6,10 +6,13 @@ class Cycle_Point_Status:
     num_ebikes: int
     total_slots: int
 
-    def __init__(self, num_standard_bikes: int, num_ebikes: int, total_slots: int) -> None:
-        self.num_standard_bikes = num_standard_bikes
-        self.num_ebikes = num_ebikes
-        self.total_slots = total_slots
+    def __init__(self, num_standard_bikes: str, num_ebikes: str, total_slots: str) -> None:
+        self.num_standard_bikes = int(num_standard_bikes)
+        self.num_ebikes = int(num_ebikes)
+        self.total_slots = int(total_slots)
+
+    def get_free_slots(self) -> int:
+        return self.total_slots - self.num_standard_bikes - self.num_ebikes
 
 
 class Cycle_Point(ResourceCacher[Cycle_Point_Status]):

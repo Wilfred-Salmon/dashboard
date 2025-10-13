@@ -1,12 +1,21 @@
 {% extends "base.html" %}
 {% block head %}
     <title>Bike Point Status</title>
+    <link href="{{ url_for('static', filename='styles/bike/bike_status.css') }}" rel="stylesheet" />
 {% endblock %}
 {% block body %}
     <div class="bike-status-container">
         <h1>{{cycle_point.display_name}}</h1>
-        <p>Num ebikes: {{ cycle_point.get_cycle_point_status().num_ebikes }}</p>
-        <p>Num Standard bikes: {{ cycle_point.get_cycle_point_status().num_standard_bikes }}</p>
-        <p>Num slots: {{ cycle_point.get_cycle_point_status().total_slots }}</p>
+        <div class = "bike-status-bar">
+            {% for _ in range(cycle_point.get_cycle_point_status().num_ebikes) %}
+                <span class="bike-status-icon" style="background-color: rgb(255 174 0);"></span>
+            {% endfor %}
+            {% for _ in range(cycle_point.get_cycle_point_status().num_standard_bikes) %}
+                <span class="bike-status-icon" style="background-color: green;"></span>
+            {% endfor %}
+            {% for _ in range(cycle_point.get_cycle_point_status().get_free_slots()) %}
+                <span class="bike-status-icon" style="background-color: grey;"></span>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
