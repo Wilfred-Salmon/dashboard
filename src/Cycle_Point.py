@@ -1,5 +1,8 @@
-from src.ResourceCacher import ResourceCacher
 import requests
+from typing import List, Dict
+from csv import DictReader
+from src.ResourceCacher import ResourceCacher
+
 
 class Cycle_Point_Status:
     num_standard_bikes: int
@@ -41,3 +44,8 @@ class Cycle_Point(ResourceCacher[Cycle_Point_Status]):
         trimmed_response = {self.KEY_MAPPING[dict["key"]]: dict["value"] for dict in bike_point_info if dict["key"] in self.USEFUL_KEYS}
 
         return(Cycle_Point_Status(**trimmed_response))
+    
+def get_cycles_list() -> List[Dict[str, str]]:
+    with open('./data/bikes.csv', 'r') as csvfile:
+        reader = DictReader(csvfile, delimiter=',')
+        return list(reader)

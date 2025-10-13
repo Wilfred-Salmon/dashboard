@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block head %}
+    <title>Dashboard</title>
+    <link href="{{ url_for('static', filename='styles/cycle/cycle_statuses.css') }}" rel="stylesheet" />
+    <script src="{{ url_for('static', filename='js/cycle_status_loader.js') }}"></script>
+    <script>
+        window.cycles = {{ cycles|tojson }};
+    </script>
+{% endblock %}
+{% block body %}
+    <div id="cycle-statuses">
+        {% for cycle in cycles %}
+        <div id='{{cycle.id}}' class="cycle-status-loader-container">
+            <h1>{{cycle.display_name}}</h1>
+            <div class="cycle-status-loader"></div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

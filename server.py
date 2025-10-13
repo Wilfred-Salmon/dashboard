@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, Response, abort
 from src.Line import Line, get_lines_list
 from src.Weather import City_Weather
-from src.Cycle_Point import Cycle_Point
+from src.Cycle_Point import Cycle_Point, get_cycles_list
 from typing import Tuple
 
 app = Flask(__name__)
@@ -46,15 +46,24 @@ def get_weather_for_city(city: str) -> Tuple[str, int]:
     except Exception:
         abort(404)
 
-@app.route('/bike/<string:id>')
+@app.route('/cycle/<string:id>')
 def get_status_for_point(id: str) -> Tuple[str, int]:
     display_name = request.args.get('display_name', id)
     
     cycle_point = Cycle_Point(id, display_name)
     try:
-        return render_template("bike/bike_status.html", cycle_point = cycle_point), 200
+        return render_template("cycle/cycle_status.html", cycle_point = cycle_point), 200
     except Exception:
         abort(404)
+
+@app.route('/cycles')
+def get_cyles() -> Response:
+    return jsonify(get_cycles_list())
+
+@app.route('/cycle_statuses')
+def cycle_statuses() -> str:
+    cycles = get_cycles_list()
+    return(render_template('cycle/cycle_statuses.html', cycles = cycles))
 
 if __name__ == '__main__':
     app.run(port = 8000, debug = True, host = "0.0.0.0")

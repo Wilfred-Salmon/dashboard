@@ -2,7 +2,7 @@ interface Window {
     lines: {id: string, display_name: string}[];
 }
 
-async function load_statuses(): Promise<void> {    
+async function load_line_statuses(): Promise<void> {    
     window.lines.forEach(line => {
         fetch(`line_status/${line.id}?display_name=${line.display_name}`)
         .then(res => res.text())
@@ -13,4 +13,4 @@ async function load_statuses(): Promise<void> {
     });
 }
 
-window.addEventListener("DOMContentLoaded", load_statuses);
+window.addEventListener("DOMContentLoaded", load_line_statuses);

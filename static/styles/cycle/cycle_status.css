@@ -1,13 +1,17 @@
-.bike-status-bar{
+.cycle-status-bar{
     display: flex;
     align-items: center;
-    padding: 5px
+    padding: 5px;
 }
 
-.bike-status-icon{
+.cycle-status-icon{
     height: 25px;
     width: 25px;
     margin: 2px;
     display: inline-block;
     border-radius: 20%;
+}
+
+.cycle-status-container{
+    margin: 5px;
 }
