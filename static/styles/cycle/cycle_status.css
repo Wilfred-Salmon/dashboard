@@ -1,7 +1,6 @@
 .cycle-status-bar{
     display: flex;
     align-items: center;
-    padding: 5px;
 }
 
 .cycle-status-icon{
