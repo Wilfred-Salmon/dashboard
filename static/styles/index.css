@@ -1,10 +1,15 @@
 .main-container{
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: space-around;
     width: 100vw;
     height: 100vh;
 }
 
 .widget-frame{
-    border: none
+    border: solid black;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 10px;
 }

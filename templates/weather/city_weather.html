@@ -4,16 +4,18 @@
     <link href="{{ url_for('static', filename='styles/weather/weather.css') }}" rel="stylesheet" />
 {% endblock %}
 {% block body %}
-    <h1>{{weather.display_name}}</h1>
-    <div class="weather-forecast-container">
-        {% for forecast in weather.get_weather() %}
-        <div class="weather-forecast">
-            <p>{{ forecast.time.strftime('%Y-%m-%d %H:%M') }}</p>
-            <img src="http://openweathermap.org/img/wn/{{ forecast.icon.value }}@2x.png" style="height:100px;" />
-            <p>{{ forecast.temperature }}°C</p>
-            <p>{{ forecast.description.capitalize() }}</p>
-            <p>FL: {{ forecast.feels_like }}°C</p>
+    <div class="weather-container">
+        <h1 class="weather-heading">{{weather.display_name}}</h1>
+        <div class="weather-forecast-container">
+            {% for forecast in weather.get_weather() %}
+            <div class="weather-forecast">
+                <p>{{ forecast.time.strftime('%Y-%m-%d %H:%M') }}</p>
+                <img src="http://openweathermap.org/img/wn/{{ forecast.icon.value }}@2x.png" style="height:100px;" />
+                <p>{{ forecast.temperature }}°C</p>
+                <p>{{ forecast.description.capitalize() }}</p>
+                <p>FL: {{ forecast.feels_like }}°C</p>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 {% endblock %}

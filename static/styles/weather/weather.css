@@ -2,7 +2,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    align-items: space-around;
+    justify-content: space-around;
 }
 
 .weather-forecast{
@@ -10,4 +10,15 @@
     align-items: center;
     flex-direction: column;
     margin: 10px;
+}
+
+.weather-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  height: 100vh;
+}
+
+.weather-heading {
+    margin: 0px 10px;
 }

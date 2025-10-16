@@ -1,11 +1,13 @@
 .cycle-status-bar{
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    margin: 5px 0px;
 }
 
 .cycle-status-icon{
     height: 25px;
-    width: 25px;
+    aspect-ratio: 1;
     margin: 2px;
     display: inline-block;
     border-radius: 20%;
@@ -13,4 +15,5 @@
 
 .cycle-status-container{
     margin: 5px;
+    width: 100%
 }
