@@ -9,11 +9,11 @@
         <div class="weather-forecast-container">
             {% for forecast in weather.get_weather() %}
             <div class="weather-forecast">
-                <p>{{ forecast.time.strftime('%Y-%m-%d %H:%M') }}</p>
+                <p class="weather-text">{{ forecast.time.strftime('%Y-%m-%d %H:%M') }}</p>
                 <img src="http://openweathermap.org/img/wn/{{ forecast.icon.value }}@2x.png" style="height:100px;" />
-                <p>{{ forecast.temperature }}°C</p>
-                <p>{{ forecast.description.capitalize() }}</p>
-                <p>FL: {{ forecast.feels_like }}°C</p>
+                <p class="weather-text">{{ forecast.temperature }}°C</p>
+                <p class="weather-text">{{ forecast.description.capitalize() }}</p>
+                <p class="weather-text">FL: {{ forecast.feels_like }}°C</p>
             </div>
             {% endfor %}
         </div>
